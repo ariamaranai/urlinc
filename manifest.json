@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "urlinc",
+  "version": "0",
+  "description": "Increment the number in the URL",
+  "icons": {
+    "128": "128.png"
+  },
+  "permissions": [
+    "tabs",
+    "tabGroups"
+  ],
+  "action": {
+    "default_popup": "popup.htm"
+  }
+}
