@@ -9,15 +9,15 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
       let nLen = n.length;
       let i = result.index;
       let isPositive = count > 0;
-      let repl = n[0] != "0" ? () => --n : (--n + "").padStart(nLen, "0");
       let index = tab.index + isPositive;
       let tabIds = Array((count = isPositive ? count : -count) + 1);
-
+      let f = n[0] != "0" ? () => --n : () => (--n + "").padStart(nLen, "0");
+      
       n = +n + (isPositive && tabIds.length);
       tabIds[i = 0] = tab.id;
       while (
         tabIds[++i] = chrome.tabs.create({
-          url: result[1] + repl() + result[3],
+          url: result[1] + f() + result[3],
           active: !1,
           index
         }),
