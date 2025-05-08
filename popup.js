@@ -1,5 +1,5 @@
 onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow: !0 }, async tabs => {
-  let count = document.body.lastChild.value;
+  let count = +document.body.lastChild.value;
   if (count) {
     let tab = tabs[0];
     let url = tab.url;
@@ -12,8 +12,8 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
       let index = tab.index + isPositive;
       let tabIds = Array((count = isPositive ? count : -count) + 1);
       let f = n[0] != "0" ? () => --n : () => (--n + "").padStart(nLen, "0");
-      
-      n = +n + (isPositive && tabIds.length);
+
+      n = +n + (isPositive && count + 1);
       tabIds[i = 0] = tab.id;
       while (
         tabIds[++i] = chrome.tabs.create({
@@ -30,7 +30,7 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
         tabIds[++i] = tabIds[i].id,
         i < count
       );
-    
+
       let { groupId } = tab;
       groupId < 0
         ? chrome.tabs.group({ tabIds })
