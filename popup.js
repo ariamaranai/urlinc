@@ -32,15 +32,15 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
       );
 
       let { groupId } = tab;
-      groupId < 0
-        ? chrome.tabs.group({ tabIds })
-        : chrome.tabs.query({ groupId }, tabs =>
-            isPositive && tabs.at(-1).active
-              ? chrome.tabs.group({ groupId, tabIds: tabIds.concat(tabs.map(v => v.id)) })
-              : !isPositive && tabs[0].active
-                ? chrome.tabs.group({ groupId, tabIds: tabs.map(v => v.id).concat(tabIds) })
-                : chrome.tabs.group({ tabIds })
-          );
+      chrome.tabs.group(
+        groupId < 0
+          ? { tabIds }
+          : ((n = await chrome.tabs.query({ groupId })), isPositive && n.at(-1).active)
+            ? { groupId, tabIds: tabIds.concat(n.map(v => v.id)) }
+            : !isPositive && n[0].active
+              ? { groupId, tabIds: n.map(v => v.id).concat(tabIds) }
+              : { tabIds }
+      );
     }
     close();
   }
