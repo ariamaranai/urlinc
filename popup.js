@@ -2,12 +2,14 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
   let count = +document.body.lastChild.value;
   if (count) {
     let tab = tabs[0];
-    let url = tab.url;
-    let result = /^(.*?)(\d+)(?!.*\d)(.*)$/.exec(url);
+    let { url } = tab;
+    let result =/(?<!%[0-9A-Fa-f]{0,2})\d+(?!.*?(?<!%[0-9A-Fa-f]{0,2})\d)/.exec(url);
     if (result) {
-      let n = result[2];
+      let n = result[0];
       let nLen = n.length;
       let i = result.index;
+      let s0 = url.slice(0, i);
+      let s1 = url.slice(i + nLen);
       let isPositive = count > 0;
       let index = tab.index + isPositive;
       let tabIds = Array((count = isPositive ? count : -count) + 1);
@@ -17,7 +19,7 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
       tabIds[i = 0] = tab.id;
       while (
         tabIds[++i] = chrome.tabs.create({
-          url: result[1] + f() + result[3],
+          url: s0 + f() + s1,
           active: !1,
           index
         }),
