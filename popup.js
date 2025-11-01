@@ -2,7 +2,7 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
   let count = +document.body.lastChild.value;
   if (count) {
     let tab = tabs[0];
-    let url = tab.url;
+    let { url } = tab;
     let result = /(?<!%[0-9A-Fa-f]{0,2})\d+(?!.*?(?<!%[0-9A-Fa-f]{0,2})\d)/.exec(url);
     if (result) {
       let n = result[0];
@@ -30,7 +30,7 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
         tabIds[++i] = tabIds[i].id,
         i < count
       );
-      let groupId = tab.groupId;
+      let { groupId } = tab;
       chrome.tabs.group(
         groupId < 0
           ? { tabIds }
