@@ -12,7 +12,7 @@ onkeyup = e => e.keyCode == 13 && chrome.tabs.query({ active: !0, currentWindow:
       let s1 = url.slice(i + nLen);
       let isPositive = count > 0;
       let index = isPositive + tab.index;
-      let f = n.charCodeAt() == 48 ? () => (--n + "").padStart(nLen, "0") : () => --n;
+      let f = n[0] == "0" ? () => (--n + "").padStart(nLen, "0") : () => --n;
       n = +n + (isPositive && count + 1);
       let tabIds = Array((count = isPositive ? count : -count) + 1);
       tabIds[i = 0] = tab.id;
